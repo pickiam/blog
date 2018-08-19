@@ -1,5 +1,5 @@
 let baseUrl;
 
-baseUrl = 'http://47.98.32.222:8080/ubi/'
+baseUrl = 'http://127.0.0.1:4444'
 
 export default baseUrl;

@@ -5,7 +5,7 @@ export function createRouter() {
     return new Router({
         mode: 'history',
         routes: [
-            { name: 'Home', path: '/', component: () => import('../views/index.vue') },
+            { name: 'login', path: '/login', component: () => import('../views/login.vue') },
         ]
     })
 }

@@ -1,7 +1,7 @@
 import fetch from '../config/fetch.js';
 
-export const fetchTest = params => fetch({
-    url: 'carAmount',
-    type: 'GET',
+export const login = params => fetch({
+    url: '/admin/login',
+    type: 'POST',
     data: params
 })
