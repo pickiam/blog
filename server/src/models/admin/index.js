@@ -25,6 +25,11 @@ const Admin = sequelize.define('admin', {
     ad_created_time: {
         type: Sequelize.DATE,
         comment: '更新时间'
+    },
+    ad_status: {
+        type: Sequelize.INTEGER,
+        defaultValue: 1,
+        comment: '状态 0 无效 1有效'
     }
 }, {
     tableName: 'blog_admin',
@@ -33,5 +38,8 @@ const Admin = sequelize.define('admin', {
     updatedAt: 'ad_updated_time',
     underscoped: true
 });
+
+// 创建用户表
+Admin.sync();
 
 export default Admin;

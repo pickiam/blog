@@ -16,12 +16,16 @@
   "dependencies": {
     "crypto": "^1.0.1",
     "formidable": "^1.2.1",
+    "ioredis": "^4.0.0",
+    "jsonwebtoken": "^8.3.0",
     "koa": "^2.5.2",
+    "koa-jwt": "^3.3.2",
     "koa-router": "^7.4.0",
     "koa2-cors": "^2.0.6",
     "moment": "^2.22.2",
     "mysql2": "^1.6.1",
     "sequelize": "^4.38.0",
+    "socket.io": "^2.1.1",
     "typescript": "^3.0.1"
   },
   "devDependencies": {

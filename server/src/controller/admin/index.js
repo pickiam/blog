@@ -1,7 +1,9 @@
 import base from '../../base/index.js';
 import formidable from 'formidable'; 
 import crypto from 'crypto';
-import adminModel from '../../models/admin/index.js'
+import jwt from 'jsonwebtoken';
+import adminModel from '../../models/admin/index.js';
+import config from '../../config/index.js';
 class admin extends base {
     constructor () {
         super();
@@ -36,19 +38,34 @@ class admin extends base {
                } 
                 const newPassWord = this.encryption(passWord);
                 try {
-                    const admin = await adminModel.find({where: {
-                        ad_username: userName
-                    }});
-                    if (!admin) {
-                        throw new Error('用户不存在');
-                    } else if (newPassWord.toString() !== admin.ad_password.toString()) {
-                        throw new Error('用户密码不正确');
-                    } else {
-                        ctx.body = {
-                            code: 200,
-                            success: true,
-                            message: 'login successfun'
+                    const len = await adminModel.findAll();
+                    if (len.length) {
+                        const admin = await adminModel.find({where: {
+                            ad_username: userName
+                        }});
+                        if (!admin) {
+                            throw new Error('用户不存在');
+                        } else if (newPassWord.toString() !== admin.ad_password.toString()) {
+                            throw new Error('用户密码不正确');
+                        } else {
+                            const userToken = {
+                                name: userName,
+                                id: admin.ad_id
+                            };
+                            const token = jwt.sign(userToken, config.tokenSecret, {expiresIn: '2h'});
+                            resolve({
+                                code: 200,
+                                success: true,
+                                token: token,
+                                message: '登录成功'
+                            })
                         }
+                    } else {
+                        adminModel.create({
+                            ad_id: 1,
+                            ad_username: 'dojo',
+                            ad_password: newPassWord
+                        })
                     }
                 } catch (error) {
                     console.log(error)

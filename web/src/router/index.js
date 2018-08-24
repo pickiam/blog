@@ -6,6 +6,7 @@ export function createRouter() {
         mode: 'history',
         routes: [
             { name: 'login', path: '/login', component: () => import('../views/login.vue') },
+            { name: 'home', path: '/', component: () => import('../views/home.vue')}
         ]
     })
 }
