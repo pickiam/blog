@@ -13,6 +13,7 @@
   "author": "dojo",
   "license": "ISC",
   "dependencies": {
+    "animate.css": "^3.7.0",
     "axios": "^0.16.2",
     "element-ui": "^2.4.5",
     "es6-promise": "^4.1.1",

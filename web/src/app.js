@@ -3,11 +3,12 @@ import App from './App.vue'
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import 'normalize.css';
+import animate from 'animate.css'
 import { createRouter } from './router';
 import createStore  from './store';
 import { sync } from 'vuex-router-sync';
 Vue.use(ElementUI);
-
+Vue.use(animate);
 export function createApp () {
   // 创建 router 和 store 实例
   const router = createRouter()
