@@ -12,7 +12,8 @@ export function createRouter() {
                 path: '/blog',
                 component: Main,
                 children: [
-                    {name: 'index', path: 'index', component: () => import('../views/home.vue')}
+                    {name: 'index', path: 'index', component: () => import('../views/home.vue')},
+                    {name: 'edit', path: 'edit', component: () => import('../views/edit.vue')}
                 ]
             }
         ]

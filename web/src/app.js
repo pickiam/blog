@@ -8,6 +8,7 @@ import { createRouter } from './router';
 import createStore  from './store';
 import { sync } from 'vuex-router-sync';
 Vue.use(ElementUI);
+
 Vue.use(animate);
 export function createApp () {
   // 创建 router 和 store 实例
