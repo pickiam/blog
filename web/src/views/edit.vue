@@ -18,6 +18,7 @@
         },
         mounted () {
             var editor = require('../static/edit/edit.js');
+            var marked = require('../static/edit/marked.js')
             this.editor = new editor.Editor();
             this.editor.render();
         }
