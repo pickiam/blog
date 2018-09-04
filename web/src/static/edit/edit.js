@@ -1,3 +1,5 @@
+import { artList } from '../../api/index.js';
+
 (function(global) {
     // CodeMirror version 3.15
     //
@@ -1578,6 +1580,7 @@
         on(d.input, "input", bind(fastPoll, cm));
         on(d.input, "keydown", operation(cm, onKeyDown));
         on(d.input, "keypress", operation(cm, onKeyPress));
+        on(d.input, "paste", operation(cm, onPaste));
         on(d.input, "focus", bind(onFocus, cm));
         on(d.input, "blur", bind(onBlur, cm));
     
@@ -1596,10 +1599,10 @@
           focusInput(cm);
           fastPoll(cm);
         });
-        on(d.input, "paste", function() {
-          cm.state.pasteIncoming = true;
-          fastPoll(cm);
-        });
+        // on(d.input, "paste", function() {
+        //   cm.state.pasteIncoming = true;
+        //   fastPoll(cm);
+        // });
     
         function prepareCopy() {
           if (d.inaccurateSelection) {
@@ -2093,7 +2096,26 @@
         if (ie && !ie_lt9) cm.display.inputHasSelection = null;
         fastPoll(cm);
       }
-    
+      function onPaste(e) {
+          console.log(e);
+          if (!e.clipboardData) return true;
+          if (e.clipboardData.types == 'text/plain') return true;
+          if (e.clipboardData.types == 'Files') {
+            imgReader(e.clipboardData.items[0])
+          }
+      }
+      function imgReader (item) {
+        if (item.kind == 'file' && item.type == 'image/png') {
+            var file = item.getAsFile();
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                artList({urls: e.target.result}).then((res) => {
+                    _replaceSelection(editor.codemirror, false, '![', ']('+res.data.data+')\n')
+                })
+            }
+            reader.readAsDataURL(file);
+        }
+      }
       function onFocus(cm) {
         if (cm.options.readOnly == "nocursor") return;
         if (!cm.state.focused) {

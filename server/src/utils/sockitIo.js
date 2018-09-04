@@ -44,3 +44,5 @@ const initSocket = function (server) {
         });
     });
 }
+
+export default initSocket;

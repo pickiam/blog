@@ -1,8 +1,8 @@
 import axios from 'axios';
-import baseUrl from './env.js'
+import env from './env.js'
 export default async (options) => {
     options.type = options.type.toLowerCase();
-    options.url = baseUrl + options.url;
+    options.url = env.baseUrl + options.url;
     if ((options.type === 'get' || options.type === 'delete') && options.data) {
         let dataStr = '';
         if (Array.isArray(options.data)) {

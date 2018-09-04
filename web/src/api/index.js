@@ -11,3 +11,9 @@ export const artList = params => fetch({
     type: 'GET',
     data: params
 });
+
+export const getArticleInfo = params => fetch({
+    url: '/artcle/getArticleInof',
+    type: 'GET',
+    data: params
+});
