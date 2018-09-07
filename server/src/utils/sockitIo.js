@@ -5,8 +5,7 @@ import redisMysql from './redisToMysql.js';
 let draftPostRedisKey = config.draftPostRedisKey;
 const initSocket = function (server) {
     let socketHandle = socketIo(server, {
-        serveClient: true,
-        path: config.socketPath
+        serveClient: true
     });
 
     let draftRedis = new redis(config.redis);

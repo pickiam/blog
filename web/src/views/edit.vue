@@ -17,8 +17,9 @@
                 articleInfo: {
                     title: '',
                     content: '',
-                    tags: ''
+                    tags: '',
                 },
+                timer: '',
                 name: '新增文章'
             }
         },
@@ -30,12 +31,21 @@
             var marked = require('../static/edit/marked.js');
             this.editor = new editor.Editor();
             this.editor.render();
-            this.socket = io(env.wsUrl, {
-                path: env.wsPath
+            this.socket = io(env.wsUrl);
+            this.socket.on('connect', () => {
+                this.socket.on('saveDraftPost', (res) => {
+                    console.log(res);
+                });
             });
-            this.socket.on('connection', () => {
-                
-            });
+            this.socket.emit('getDraftPost');
+            
+            this.socket.on('getDraftPost', (data) => {
+                console.log(data);
+            })
+            this.timer = setInterval(() => {
+                this.articleInfo.content = this.editor.value();
+            }, 1000);
+
             if (this.$route.query.id) {
                 this.name = '编辑文章';
                 this.getArticleInfo(this.$route.query.id);
@@ -49,7 +59,6 @@
         },
         methods: {
             submit () {
-                
             },
             async getArticleInfo (id) {
                 let res = await getArticleInfo(id);
@@ -58,12 +67,15 @@
         },
         watch: {
             articleInfo: {
-                handler: () => {
-
+                handler: function(oldVal, newVal) {
+                    this.socket.emit('saveDraftPost', newVal);
                 },
                 deep: true
             }
-        }
+        },
+        destroyed () {
+            clearInterval(this.timer);
+        },
     }
 </script>
 <style lang="less" scoped>

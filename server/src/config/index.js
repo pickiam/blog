@@ -5,7 +5,7 @@ export default {
     user: process.env.NODE_ENV === 'development' ? 'root' : 'mysql',
     password: process.env.NODE_ENV === 'development' ? 'root' : 'dell_270',
     tokenSecret: process.env.NODE_ENV === 'development' ? 'dojo': 'dojo',
-    redis: process.env.NODE_ENV === 'development' ? {} : {},
+    redis: process.env.NODE_ENV === 'development' ?  '118.24.69.214:6379': {},
     socketPath: process.env.NODE_ENV === 'development' ? 'dojo' : 'dojo',
     draftPostRedisKey: process.env.NODE_ENV === 'development' ? 'dojo' : 'dojo'
 }
