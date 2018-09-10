@@ -13,7 +13,13 @@ export const artList = params => fetch({
 });
 
 export const getArticleInfo = params => fetch({
-    url: '/artcle/getArticleInof',
+    url: '/artcle/getArticleInfo',
     type: 'GET',
     data: params
 });
+
+export const getTagsList = params => fetch({
+    url: '/tags/getTagsList',
+    type: 'GET',
+    data: params
+})

@@ -16,7 +16,6 @@ const tag = sequelize.define('tag', {
     tag_type: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        autoIncrement: true,
         comment: '类型'
     },
     tag_value: {

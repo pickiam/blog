@@ -1,15 +1,33 @@
 <template>
-    <div class="editor-wrapper">
-        <textarea id="editor" v-model="articleInfo.content" placeholder="Content here ...."></textarea>
+    <div>
+        <div>
+            <el-input placeholder="请输入标题" v-model="articleInfo.title"></el-input>
+        </div>
+        <div class="editor-wrapper">
+            <textarea id="editor" v-model="articleInfo.content" placeholder="Content here ...."></textarea>
+        </div>
+        <div>
+            <el-checkbox-group v-model="articleInfo.tags">
+                <el-checkbox v-for="tag in tags" :label="tag" :key="tag">{{tag}}</el-checkbox>
+            </el-checkbox-group>
+        </div>
+        
     </div>
 </template>
 <script>
     import io from 'socket.io-client';
     import marked from 'marked';
     import env from '../config/env.js';
-    import  { getArticleInfo } from '../api/index.js'
     export default {
         name: 'edit',
+        asyncData({ store, route }) {
+            return Promise.all([store.dispatch('getTagsList')]);
+        },
+        computed: {
+            tags () {
+                return this.$store.state.tags;
+            }
+        },
         data () {
             return {
                 editor: '',
@@ -38,7 +56,7 @@
                 });
             });
             this.socket.emit('getDraftPost');
-            
+
             this.socket.on('getDraftPost', (data) => {
                 console.log(data);
             })

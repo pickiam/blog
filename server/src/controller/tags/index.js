@@ -62,6 +62,22 @@ class tag extends base {
             
         }
     }
+
+    async tagsList (ctx, next) {
+        try {
+            let tags = tagModel.findAll();
+            ctx.body = {
+                code: 200,
+                success: true,
+                data: tags
+            }
+        } catch (error) {
+            ctx.body = {
+                code: 0,
+                message: '查询tag列表失败'
+            }
+        }
+    }
 }
 
 export default new tag();

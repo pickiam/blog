@@ -45,6 +45,9 @@ class article extends base {
             
         })
     }
+    async updateArtitcle (ctx, next) {
+        
+    }
     async articleDetail (ctx, next) {
         let { id } = ctx.params.id;
         try {
