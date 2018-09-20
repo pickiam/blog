@@ -13,7 +13,8 @@ export function createRouter() {
                 component: Main,
                 children: [
                     {name: 'index', path: 'index', component: () => import('../views/home.vue')},
-                    {name: 'edit', path: 'edit', component: () => import('../views/edit.vue')}
+                    {name: 'edit', path: 'edit', component: () => import('../views/edit.vue')},
+                    {name: 'tag', path: 'tag', component: () => import('../views/tag.vue')}
                 ]
             }
         ]

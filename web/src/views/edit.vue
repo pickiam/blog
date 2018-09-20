@@ -1,6 +1,7 @@
 <template>
     <div>
-        <div>
+        <div class="title-con">
+            <p class="title">{{name}}</p>
             <el-input placeholder="请输入标题" v-model="articleInfo.title"></el-input>
         </div>
         <div class="editor-wrapper">
@@ -11,7 +12,7 @@
                 <el-checkbox v-for="tag in tags" :label="tag" :key="tag">{{tag}}</el-checkbox>
             </el-checkbox-group>
         </div>
-        
+
     </div>
 </template>
 <script>
@@ -37,7 +38,7 @@
                     content: '',
                     tags: '',
                 },
-                timer: '',
+                timer: null,
                 name: '新增文章'
             }
         },
@@ -98,5 +99,15 @@
 </script>
 <style lang="less" scoped>
 @import url(../static/edit/edit.css);
+.title-con {
+    margin-bottom: 20px;
+    .title {
+        font-size: 20px;
+        color: #808080
+    }
+}
+.editor-wrapper {
+    background: rgba(255, 255, 255, 0.5)
+}
 </style>
 

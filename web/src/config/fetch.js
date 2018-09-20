@@ -26,7 +26,7 @@ export default async (options) => {
         }
     }
     let pramas = null;
-    if (options.type === 'post') {
+    if (options.type === 'post' || options.type === 'put') {
         pramas = options.data;
     };
     try {

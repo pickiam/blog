@@ -13,11 +13,6 @@ const tag = sequelize.define('tag', {
         defaultValue: 1,
         comment: '状态 0 无效 1有效'
     },
-    tag_type: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        comment: '类型'
-    },
     tag_value: {
         type: Sequelize.STRING,
         allowNull: true,

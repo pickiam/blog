@@ -12,7 +12,7 @@ import { artList } from '../api/index.js';
             }
         },
         mounted() {
-            artList()
+            // artList()
         },
     }
 </script>
