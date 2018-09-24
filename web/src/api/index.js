@@ -39,4 +39,15 @@ export const updateTag = params => fetch({
     url: '/tags/updateTag/' + params.tagId,
     type: 'PUT',
     data: params
+});
+
+export const getArtList = params => fetch({
+    url: '/arts/artList',
+    type: 'GET',
+    data: params
+});
+
+export const getArtDetails = params => fetch({
+    url: '/arts/artDetail/' + params.artId,
+    type: 'get'
 })

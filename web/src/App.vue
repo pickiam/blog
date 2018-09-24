@@ -120,6 +120,16 @@ export default {
         min-height: 101%;
         line-height: 1.5;
     }
+    ul, li {
+        list-style-type: none;
+    }
+    li {
+        padding: 10px 20px;
+    }
+    p {
+        margin: 0;
+        padding: 0;
+    }
     #canvas {
         position: absolute;
         left: 0;

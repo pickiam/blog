@@ -1,7 +1,7 @@
 // store.js
 import Vue from 'vue'
 import Vuex from 'vuex'
-import { getTagsList } from '../api/index.js'
+import { getTagsList, getArtList } from '../api/index.js'
 Vue.use(Vuex)
 function fetchBar() {
   return new Promise(function (resolve, reject) {
@@ -14,17 +14,29 @@ export default function createStore() {
       state: {
           bar: '',
           info: '',
-          tagsList: []
+          tagsList: [],
+          artList: []
       },
       actions: {
           fetchBar({commit}) {
               return fetchBar().then(msg => {
                   commit('setBar', {msg})
+              }, err => {
+                  console.log(err)
               })
           },
           getTagsList({commit}) {
               return getTagsList().then(res => {
                   commit('getTagsList', res.data.data)
+              }, err => {
+                  console.log(err);  
+              })
+          },
+          getArtList({commit}) {
+              return getArtList().then(res => {
+                  commit('getArtList', res.data.data)
+              }, err => {
+                  console.log(err);
               })
           }
       },
@@ -34,6 +46,9 @@ export default function createStore() {
           },
           getTagsList(state, data) {
               Vue.set(state, 'tagsList', data)
+          },
+          getArtList(state, data) {
+              Vue.set(state, 'artList', data)
           }
       }
   })
