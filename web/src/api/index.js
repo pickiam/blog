@@ -42,12 +42,18 @@ export const updateTag = params => fetch({
 });
 
 export const getArtList = params => fetch({
-    url: '/arts/artList',
+    url: '/article/artList',
     type: 'GET',
     data: params
 });
 
 export const getArtDetails = params => fetch({
-    url: '/arts/artDetail/' + params.artId,
+    url: '/article/artDetail/' + params,
     type: 'get'
-})
+});
+
+export const addArticle = params => fetch({
+    url: '/article/addArticle',
+    type: 'POST',
+    data: params
+});

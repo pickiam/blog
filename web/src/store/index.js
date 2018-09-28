@@ -1,7 +1,7 @@
 // store.js
 import Vue from 'vue'
 import Vuex from 'vuex'
-import { getTagsList, getArtList } from '../api/index.js'
+import { getTagsList, getArtList, getArtDetails } from '../api/index.js'
 Vue.use(Vuex)
 function fetchBar() {
   return new Promise(function (resolve, reject) {
@@ -15,7 +15,8 @@ export default function createStore() {
           bar: '',
           info: '',
           tagsList: [],
-          artList: []
+          artList: [],
+          artDetail: ''
       },
       actions: {
           fetchBar({commit}) {
@@ -38,6 +39,14 @@ export default function createStore() {
               }, err => {
                   console.log(err);
               })
+          },
+          getArtDetails({commit}, payload) {
+              console.log(payload);
+              return getArtDetails(payload).then(res => {
+                  commit('getArtDetails', res.data.data)
+              }, err => {
+                  console.log(err);
+              }) 
           }
       },
       mutations:{
@@ -49,6 +58,9 @@ export default function createStore() {
           },
           getArtList(state, data) {
               Vue.set(state, 'artList', data)
+          },
+          getArtDetails(state, data) {
+              Vue.set(state, 'artDetail', data)
           }
       }
   })

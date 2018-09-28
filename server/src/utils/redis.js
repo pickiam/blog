@@ -18,7 +18,6 @@ class Redis {
             console.log(error);
         }
     }
-
     async delete (key) {
         await this.redis.del(key);
     }

@@ -7,6 +7,7 @@ export function createRouter() {
         mode: 'history',
         routes: [
             { name: 'login', path: '/login', component: () => import('../views/login.vue') },
+            { name: 'home', path: '/home', redirect: '/blog/blogList', component: () => import('../views/home.vue')},
             {
                 name: 'Main',
                 path: '/blog',
@@ -16,7 +17,7 @@ export function createRouter() {
                     {name: 'edit', path: 'edit', component: () => import('../views/edit.vue')},
                     {name: 'tag', path: 'tag', component: () => import('../views/tag.vue')},
                     {name: 'blogList', path: 'blogList', component: () => import('../views/blogList.vue')},
-                    {name: 'blogDetail/:id', path: 'blogDetail', component: () => import('../views/blogDetail.vue')}
+                    {name: 'blogDetail', path: 'blogDetail/:id', component: () => import('../views/blogDetail.vue')}
                 ]
             }
         ]

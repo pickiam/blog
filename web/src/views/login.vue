@@ -6,8 +6,8 @@
                     <el-form-item  prop="userName">
                         <el-input type="text" v-model="ruleForm.userName" auto-complete="off" placeholder="请输入账号"></el-input>
                     </el-form-item>
-                    <el-form-item  prop="password">
-                        <el-input type="password" v-model="ruleForm.password" auto-complete="off" placeholder="请输入密码"></el-input>
+                    <el-form-item  prop="passWord">
+                        <el-input type="password" v-model="ruleForm.passWord" auto-complete="off" placeholder="请输入密码"></el-input>
                     </el-form-item>
                     <el-form-item class="form-button">
                         <el-button type="primary" @click="submitForm('ruleForm')">提交</el-button>
@@ -27,14 +27,14 @@ import { login } from '../api/index.js'
             return {
                 ruleForm: {
                     userName: '',
-                    password: ''
+                    passWord: ''
                 },
                 toggle: false, // 进入页面时，动画的开关
                 rules: {
                     userName: [
                         { required: true, message: '请输入账号', trigger: 'blur' },
                     ],
-                    password: [
+                    passWord: [
                         { required: true, message: '请输入密码', trigger: 'blur' },
                     ]
                 }
@@ -48,7 +48,7 @@ import { login } from '../api/index.js'
                 this.$refs[formName].validate(async (valid) => {
                     if (valid) {
                         const response = await login(this.ruleForm);
-                        if (response.data.data.success) {
+                        if (response.data.success) {
                             this.$router.push('home')
                         } else {
 

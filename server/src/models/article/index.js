@@ -38,9 +38,18 @@ const Article = sequelize.define('article', {
         type: Sequelize.STRING,
         comment: '种类'
     },
+    art_htmlDetail: {
+        type: Sequelize.TEXT,
+        comment: 'html内容'
+    },
     art_tag: {
         type: Sequelize.STRING,
         comment: '标签'
+    },
+    art_title: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        comment: '标题'
     }
 }, {
     tableName: 'blog_article',

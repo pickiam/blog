@@ -3,6 +3,9 @@ import config from './config';
 const sequelize = new Sequelize(config.dataBase, config.user, config.password, {
     host: config.url,
     dialect: 'mysql',
+    dialectOptions: {
+        charset: 'utf8mb4'
+     },
     pool: {
         max: 5,
         min: 0,

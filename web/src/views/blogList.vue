@@ -1,19 +1,30 @@
 <template>
     <ul>
-        <li class="art-des">
-            <p class="art-title">文章标题</p>
-            <div class="des-con">这是你的啥这是你的啥这是你的啥这是你的啥这是你的啥这是你的啥这是你的啥这是你的啥这是你的啥这是你的啥这是你的啥这是你的啥这是你的啥这是你的啥这是你的啥这是你的啥这是你的啥这是你的啥这是你的啥这是你的啥这是你的啥这是你的啥这是你的啥这是你的啥这是你的啥这是你的啥这是你的啥这是你的啥这是你的啥这是你的啥这是你的啥这是你的啥这是你的啥这是你的啥这是你的啥这是你的啥这是你的啥这是你的啥这是你的啥这是你的啥这是你的啥这是你的啥这是你的啥这是你的啥这是你的啥这是你的啥这是你的啥这是你的啥这是你的啥这是你的啥这是你的啥这是你的你的啥这是你的啥这是你的啥这是你的啥这是你的啥这是你的啥这是你的啥这是你的啥</div>
-            <p class="art-oth">2018:09:24</p>
+        <li class="art-des" v-for="(art, index) in artList" :key="index" @click="goDetail(art.art_id)">
+            <p class="art-title">{{ art.art_title }}</p>
+            <div class="des-con">{{ art.art_detail }}</div>
+            <p class="art-oth">{{ art.art_create_time}}</p>
         </li>
     </ul>
 </template>
 <script>
 export default {
-    async({store}) {
+    asyncData ({store}) {
         return store.dispatch('getArtList')
     },
-    data () {
-        blogList: []
+    computed: {
+        artList () {
+            return this.$store.state.artList
+        }
+    },
+    mounted() {
+        console.log(this.artList)
+    },
+    methods: {
+        goDetail (id) {
+            console.log(id)
+            this.$router.push({name: 'blogDetail', params: {id:id}})
+        }
     }
 }
 </script>
@@ -21,6 +32,7 @@ export default {
     .art-des {
         background: rgba(255,255,255,0.7);
         margin-bottom: 20px;
+        cursor: pointer;
         .art-title {
             line-height: 26px;
             font-size: 20px;

@@ -1,7 +1,8 @@
 import base from '../../base/index.js';
 import ArticleModel from '../../models/article/index.js';
-import formidable from 'formidable'; 
-
+import formidable from 'formidable';
+import miment from 'miment';
+import marked from 'marked';
 class article extends base {
     constructor () {
         super();
@@ -15,7 +16,7 @@ class article extends base {
                 where: {
                     art_status: status
                 },
-                offset: page * pageSize,
+                offset: (page - 1) * pageSize,
                 limit: pageSize
             });
             ctx.body = {
@@ -32,24 +33,59 @@ class article extends base {
         }
     }
     async addArticle (ctx, next) {
-        const form = new formidable.IncomingForm();
-        form.parse(ctx.req, (err, fields, files) => {
-            if (err) {
-                ctx.body = {
-                    code: 0,
-                    type: 'FORM_DATA_ERROR',
-                    message: '表单信息错误'
+        return new Promise((resolve, reject) => {
+            const form = new formidable.IncomingForm();
+            form.parse(ctx.req, async (err, fields, files) => {
+                if (err) {
+                    reject({
+                        code: 0,
+                        message: '表单解析错误'
+                    })
+                };
+                const { title, content, tags, status = 1, sticky = 0} = fields;
+                console.log(marked(content));
+                if (!(title && content && tags)) {
+                    reject({
+                        code: 0,
+                        message: '表单信息不全'
+                    });
+                    return;
                 }
-                return;
-            }
-            
+                try {
+                    const response = await ArticleModel.create({
+                        art_title: title,
+                        art_status: status,
+                        art_sticky: sticky,
+                        art_htmlContent: marked(content),
+                        art_detail: content,
+                        art_create_time: miment().format(),
+                        art_update_time: miment().format(),
+                        art_tag: tags.join()
+                        // art_title: title
+                    });
+                    if (response) {
+                        resolve({
+                            code: 200,
+                            success: true,
+                            data: response,
+                            message: '保存成功'
+                        })
+                    }
+                } catch (error) {
+                    console.log(error);
+                    reject({
+                        code: 0,
+                        message: '未知错误，保存失败'
+                    })
+                }
+            })
         })
     }
     async updateArtitcle (ctx, next) {
         
     }
     async articleDetail (ctx, next) {
-        let { id } = ctx.params.id;
+        const id = ctx.params;
         try {
             const artDetail = await ArticleModel.find({
                 where: {
