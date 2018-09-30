@@ -149,6 +149,7 @@ class tag extends base {
      * @param {*} next 
      */
     async addTag (ctx, next) {
+        console.log(ctx.req)
         return new Promise((resolve, reject) => {
             const form = new formidable.IncomingForm();
             form.parse(ctx.req, async (err, fields, files) => {

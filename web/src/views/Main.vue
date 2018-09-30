@@ -45,6 +45,9 @@
             }
         },
         mounted () {
+            // if (localStorage.getItem('token') && this.$store.state.perInfo === '') {
+            //     this.$store.commit('setPerInfo',localStorage.getItem('token'))
+            // }
             this.canvas = document.getElementById('Canvas');
             this.ctx = this.canvas.getContext('2d');
             this.canvas.width = this.width;

@@ -13,7 +13,7 @@ export default function createStore() {
   return new Vuex.Store({
       state: {
           bar: '',
-          info: '',
+          perInfo: '',
           tagsList: [],
           artList: [],
           artDetail: ''
@@ -52,6 +52,9 @@ export default function createStore() {
       mutations:{
           setBar(state, {msg}) {
               Vue.set(state, 'bar', msg);
+          },
+          setPerInfo (state, data) {
+              Vue.set(state, 'perInfo', data)
           },
           getTagsList(state, data) {
               Vue.set(state, 'tagsList', data)

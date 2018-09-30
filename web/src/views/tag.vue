@@ -44,6 +44,7 @@
 import { addTag, deleteTag, updateTag } from '../api/index.js'
 export default {
     asyncData({store}) {
+        // console.log(store.state)
         return store.dispatch('getTagsList')
     },
     data () {
@@ -69,7 +70,8 @@ export default {
     methods: {
         async add () {
             if (this.tag.tagContent) {
-                const response = await addTag(this.tag);
+                console.log(localStorage.getItem('token'))
+                const response = await addTag(localStorage.getItem('token'), this.tag);
                 if (response.data.success) {
                     this.$message.success({
                         message: response.data.message

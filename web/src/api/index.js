@@ -1,59 +1,57 @@
 import fetch from '../config/fetch.js';
+import env from '../config/env.js'
 
-export const login = params => fetch({
-    url: '/admin/login',
-    type: 'POST',
+export const login = (params) => fetch({
+    url: env.baseUrl + '/admin/login',
+    method: 'POST',
     data: params
 });
 
 export const artList = params => fetch({
-    url: '/article/artList',
-    type: 'GET',
-    data: params
-});
-
-export const getArticleInfo = params => fetch({
-    url: '/artcle/getArticleInfo',
-    type: 'GET',
+    url: env.baseUrl +'/article/artList',
+    method: 'GET',
     data: params
 });
 
 export const getTagsList = params => fetch({
-    url: '/tags/getTagsList',
-    type: 'GET',
+    url: env.baseUrl + '/tags/getTagsList',
+    method: 'GET',
     data: params
 });
 
-export const addTag = params => fetch({
-    url: '/tags/addTag',
-    type: 'POST',
-    data: params
+export const addTag = (AUTH_TOKEN, params) => fetch({
+    url: env.baseUrl + '/tags/addTag',
+    method: 'POST',
+    data: params,
+    headers: { 'Authorization': 'Bearer ' + AUTH_TOKEN }
 });
 
 export const deleteTag = params => fetch({
-    url: '/tags/deleteTag/' + params,
-    type: 'DELETE'
+    url: env.baseUrl + '/tags/deleteTag/' + params,
+    method: 'DELETE'
 });
 
 export const updateTag = params => fetch({
-    url: '/tags/updateTag/' + params.tagId,
-    type: 'PUT',
+    url: env.baseUrl + '/tags/updateTag/' + params.tagId,
+    method: 'PUT',
     data: params
 });
 
 export const getArtList = params => fetch({
-    url: '/article/artList',
-    type: 'GET',
+    url: env.baseUrl + '/article/artList',
+    method: 'GET',
     data: params
 });
 
 export const getArtDetails = params => fetch({
-    url: '/article/artDetail/' + params,
-    type: 'get'
+    url: env.baseUrl + '/article/artDetail/' + params,
+    method: 'get'
 });
 
 export const addArticle = params => fetch({
-    url: '/article/addArticle',
-    type: 'POST',
-    data: params
+    url: env.baseUrl + '/article/addArticle',
+    method: 'POST',
+    data: params,
+    headers: { 'Authorization': 'Bearer ' + 'sfdfasdfasdf'}
+
 });

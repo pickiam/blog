@@ -13,6 +13,13 @@ Vue.use(animate);
 export function createApp () {
   // 创建 router 和 store 实例
   const router = createRouter()
+//   router.beforeEach(async (to, from, next) => {
+//     if (to.meta.requiresAuth && to.meta.requiresAuth === true) {
+       
+//     } else {
+//         next();
+//     }
+// });
   const store = createStore()
   // 同步路由状态(route state)到 store
   sync(store, router)

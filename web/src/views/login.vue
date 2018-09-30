@@ -49,7 +49,9 @@ import { login } from '../api/index.js'
                     if (valid) {
                         const response = await login(this.ruleForm);
                         if (response.data.success) {
-                            this.$router.push('home')
+                            this.$router.push('home');
+                            this.$store.commit('setPerInfo', response.data.token);
+                            localStorage.setItem('token', response.data.token);
                         } else {
 
                         }
