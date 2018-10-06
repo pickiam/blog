@@ -15,7 +15,14 @@ router.post('/addArticle', async (ctx, next) => {
     }
 
 });
-
+router.put('/updateArticle', async (ctx, next) => {
+    try {
+        let response = await article.updateArtitcle(ctx, next);
+        ctx.body = reponse;
+    } catch (error) {
+        ctx.body = error;
+    }
+})
 router.get('/artList',article.articleList);
 
 router.get('/artDetail/:id', article.articleDetail);

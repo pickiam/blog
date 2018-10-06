@@ -25,10 +25,11 @@ export const artilceInfo = {
     redisToMysqlTask: async () => {
         const draftRedis = new redis(config.redis);
         let rule = new schedule.RecurrenceRule();
-        rule.hour = 3;
-        rule.minute = 0;
+        rule.hour = 23;
+        rule.minute = 11;
 
         schedule.scheduleJob(rule, async () => {
+            console.log('现在的时间' + 'haha');
             let redisPost = await draftRedis.get(config.draftPostRedisKey);
             if (redisPost) {
                 // let redisPost = JSON.parse(redisPost);
@@ -38,7 +39,7 @@ export const artilceInfo = {
                         art_title: title,
                         art_status: status,
                         art_sticky: sticky,
-                        art_detail: content,
+                        art_detai: content,
                         art_create_time: miment().format(),
                         art_update_time: miment().format(),
                         art_tag: tags.join()

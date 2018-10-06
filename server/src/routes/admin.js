@@ -13,4 +13,14 @@ router.get('/admin', async (ctx, next) => {
     ctx.body = 'admin !!!!'
 })
 
+router.post('/uploadImg', async (ctx, next) => {
+    try {
+        let response = await admin.uploadImg(ctx, next);
+        ctx.body = response
+    } catch(error) {
+        ctx.body = error;
+    }
+})
+
+router.get('/accessControl', admin.accessControl)
 export default router;

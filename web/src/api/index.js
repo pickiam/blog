@@ -5,8 +5,17 @@ export const login = (params) => fetch({
     url: env.baseUrl + '/admin/login',
     method: 'POST',
     data: params
-});
-
+})
+export const uploadImg = (params) => fetch({
+    url: env.baseUrl + '/admin/uploadImg',
+    method: 'POST',
+    data: params
+})
+export const accessControl = (AUTH_TOKEN) => fetch({
+    url: env.baseUrl + '/admin/accessControl',
+    method: 'GET',
+    headers: { 'Authorization': 'Bearer ' + AUTH_TOKEN }
+})
 export const artList = params => fetch({
     url: env.baseUrl +'/article/artList',
     method: 'GET',
@@ -48,10 +57,9 @@ export const getArtDetails = params => fetch({
     method: 'get'
 });
 
-export const addArticle = params => fetch({
+export const addArticle = (AUTH_TOKEN, params) => fetch({
     url: env.baseUrl + '/article/addArticle',
     method: 'POST',
     data: params,
-    headers: { 'Authorization': 'Bearer ' + 'sfdfasdfasdf'}
-
+    headers: { 'Authorization': 'Bearer ' + AUTH_TOKEN}
 });

@@ -7,6 +7,7 @@ class article extends base {
     constructor () {
         super();
         this.articleList = this.articleList.bind(this);
+        this.updateArtitcle = this.updateArtitcle.bind(this);
     }
 
     async articleList (ctx, next) {
@@ -43,7 +44,7 @@ class article extends base {
                     })
                 };
                 const { title, content, tags, status = 1, sticky = 0} = fields;
-                console.log(marked(content));
+                const htmlContent = marked(content)
                 if (!(title && content && tags)) {
                     reject({
                         code: 0,
@@ -56,7 +57,7 @@ class article extends base {
                         art_title: title,
                         art_status: status,
                         art_sticky: sticky,
-                        art_htmlContent: marked(content),
+                        art_htmlContent: htmlContent,
                         art_detail: content,
                         art_create_time: miment().format(),
                         art_update_time: miment().format(),
@@ -82,14 +83,47 @@ class article extends base {
         })
     }
     async updateArtitcle (ctx, next) {
-        
+        const id = ctx.params.id;
+        return new Promise((resolve, reject) => {
+            const form = new formidable.IncomingForm();
+            form.parse(ctx.req, async (err, fields, files) => {
+                if (err) {
+                    reject({
+                        code: 0,
+                        message: '解析表单失败'
+                    })
+                }
+                const { title, content, tags, status, sticky } = fields;
+
+                try {
+                    const params = [['title', 'art_title'], ['content', 'art_detail'], ['tags', 'art_tag'], ['status', 'art_status'], ['sticky','art_sticky']]
+                    const transferResult = this.transfer(fields, params);
+                    if (transferResult.art_detail) {
+                        const updateKey = Object.assign({}, {art_htmlContent: marked(transferResult.art_detail)}, {art_update_time: miment.format()})
+                    }else {
+                        const updateKey = Object.assign({}, {art_update_time: miment.format()}) 
+                    }
+                    let response = await ArticleModel.update( updateKey, {
+                        where: {
+                            art_id: id
+                        }
+                    })
+                } catch (error) {
+                    console.log(error);
+                    reject({
+                        code: 0,
+                        message: '更新失败'
+                    })
+                }
+            })
+        })
     }
     async articleDetail (ctx, next) {
-        const id = ctx.params;
+        const id = ctx.params.id;
         try {
-            const artDetail = await ArticleModel.find({
+            const artDetail = await ArticleModel.findOne({
                 where: {
-                    art_id: id
+                    art_id: +id
                 }
             });
             if (!artDetail) {

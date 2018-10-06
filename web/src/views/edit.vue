@@ -18,14 +18,27 @@
         <el-row style="margin-top: 30px;">
             <el-button type="primary" @click="saveDraft">保存</el-button>
             <el-button @click="draftBox">草稿箱</el-button>
+            <el-button type="primary" style="float:right;" @click="uploadModal = true">上传图片</el-button>
         </el-row>
+        <el-dialog
+            title="上传图片"
+            :visible.sync="uploadModal"
+            width="30%">
+            <!-- <el-button type="primary">点击上传</el-button> -->
+            <input type="file" name="file" @change="upload($event)">
+            <input type="text" v-model="uploadImgUrl">
+            <span slot="footer" class="dialog-footer">
+                <el-button @click="uploadModal = false">取 消</el-button>
+                <el-button type="primary" @click="uploadModal = false">确 定</el-button>
+            </span>
+        </el-dialog>
     </div>
 </template>
 <script>
     import io from 'socket.io-client';
     import marked from 'marked';
     import env from '../config/env.js';
-    import { addArticle } from '@/api/index.js'
+    import { uploadImg, addArticle } from '@/api/index.js'
     export default {
         name: 'edit',
         asyncData({ store, route }) {
@@ -40,6 +53,9 @@
             return {
                 editor: '',
                 socket: '',
+                uploadModal: false,
+                uploadImgUrl: '',
+                actionUrl: env.baseUrl + '/admin/uploadImg',
                 articleInfo: {
                     title: '',
                     content: '',
@@ -86,13 +102,14 @@
             },
             async saveDraft () {
                 try {
-                    let response = await addArticle(this.articleInfo)
+                    let response = await addArticle(localStorage.getItem('token'), this.articleInfo)
                     if (response.data.success) {
                         this.socket.emit('clearDraftPost', async () => {
                             this.socket.on('clearDraftPost', async (data) => {
                                 console.log('保存成功')
                             })
                         })
+                        this.$router.push({name: 'blogList'})
                     }
                 } catch (error) {
                     console.log(error);
@@ -113,6 +130,19 @@
                 } catch (error) {
                     console.log(error)
                 }
+            },
+            async upload (event) {
+                let formData = new FormData();
+                formData.append('file', event.target.files[0]);
+                try {
+                    let response = await uploadImg(formData);
+                    if (response.data.success) {
+                        this.uploadImgUrl = env.baseUrl + '/'  + response.data.data;
+                    }
+                } catch (error) {
+                    console.log(error)
+                }
+                
             }
         },
         watch: {

@@ -5,7 +5,7 @@
                 <canvas id="Canvas"></canvas>
             </div>
             <ul class="target">
-                <li v-for="(item, index) in headerList" :key="index">{{item}}</li>
+                <li v-for="(item, index) in headerList" :key="index" @click="goTarget(item[1])">{{item[0]}}</li>
             </ul>
         </div>
         <div class="conContainer">
@@ -18,6 +18,7 @@
     </div>
 </template>
 <script>
+    import { accessControl } from '../api/index.js'
     export default {
         name: 'Main',
         data () {
@@ -40,7 +41,7 @@
                 colors2: ['rgba(243, 156, 107, 0.48)', 'rgba(160, 86, 59, 0.48)'],
                 xOffset2: 2, 
                 speed2: 0.02, 
-                headerList: ['主页', '添加新随笔', '标签', '关于'],
+                headerList: [['主页', 'blogList'], ['添加新随笔', 'edit'], ['标签', 'tag'], ['关于', 'about']],
 
             }
         },
@@ -56,6 +57,16 @@
             this.animate();
         },
         methods: {
+           async goTarget (params) {
+                if (params === 'blogList' || params === 'about') {
+                    this.$router.push({name: params})
+                }else if (localStorage.getItem('token') === undefined && (params === 'edit' || params === 'tag')) {
+                    // let response = await accessControl(localStorage.getItem('token'));
+                    this.$router.push({name: 'login'})
+                } else {
+                    let response = await accessControl(localStorage.getItem('token')); 
+                }
+            },
             drawSin () {
                 this.ctx.beginPath();
                 for (let x = this.startX; x < this.startX + this.width; x += 100 / this.width ) {
@@ -156,6 +167,8 @@
                 padding: 0;
                 text-align: center;
                 font-size: 14px;
+                position: relative;
+                z-index: 99999;
                 li {
                     letter-spacing: 0.45px;
                     line-height: 20px;
