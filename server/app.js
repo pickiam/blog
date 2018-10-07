@@ -16,9 +16,9 @@ app.use(cors());
 app.use(koaStatic(path.join(__dirname, './src/upload')))
 
 app.use(kwt({ secret:config.tokenSecret }).unless({
-    path:[/^\/admin\/login/, /^\/admin\/uploadImg/, /^\/article\/artList/, /^\/article\/artDetail/, /^\/tags\/getTagsList/]
+    path:[/^\/admin\/login/, /^\/admin\/uploadImg/, /^\/article\/artList/, /^\/article\/artDetail/]
 }))
-app.use(authorization());
+app.use(authorization())
 
 router(app);
 const server = http.createServer(app.callback()).listen(6060);

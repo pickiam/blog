@@ -14,6 +14,7 @@ export function createRouter() {
                 component: Main,
                 children: [
                     {name: 'index', path: 'index', component: () => import('../views/home.vue')},
+                    {name: 'artMan', path: 'artMan', component: () => import('../views/artMan.vue')},
                     {name: 'edit', path: 'edit', meta: { requiresAuth: true }, component: () => import('../views/edit.vue')},
                     {name: 'tag', path: 'tag', meta: { requiresAuth: true}, component: () => import('../views/tag.vue')},
                     {name: 'blogList', path: 'blogList', component: () => import('../views/blogList.vue')},

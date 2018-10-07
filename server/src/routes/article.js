@@ -15,7 +15,7 @@ router.post('/addArticle', async (ctx, next) => {
     }
 
 });
-router.put('/updateArticle', async (ctx, next) => {
+router.put('/updateArticle/:id', async (ctx, next) => {
     try {
         let response = await article.updateArtitcle(ctx, next);
         ctx.body = reponse;

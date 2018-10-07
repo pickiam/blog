@@ -30,7 +30,7 @@ export default function createStore() {
               return getTagsList().then(res => {
                   commit('getTagsList', res.data.data)
               }, err => {
-                  console.log(err);  
+                  console.log('123' + err);  
               })
           },
           getArtList({commit}) {

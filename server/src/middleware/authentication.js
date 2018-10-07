@@ -27,7 +27,9 @@ module.exports = function () {
       }
       await next();
     } catch (err) {
+      console.log(err)
       if (err.status === 401) {
+        console.log(err.status)
         ctx.status = 401;
         ctx.body = {
           success: 0,

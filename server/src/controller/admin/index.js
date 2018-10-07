@@ -140,7 +140,7 @@ class admin extends base {
     accessControl (ctx, next) {
         ctx.body = {
             code: 200,
-            success: ture,
+            success: true,
             message: '已登录，可跳转'
         }
     }

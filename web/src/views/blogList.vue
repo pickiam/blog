@@ -3,7 +3,7 @@
         <li class="art-des" v-for="(art, index) in artList" :key="index" @click="goDetail(art.art_id)">
             <p class="art-title">{{ art.art_title }}</p>
             <div class="des-con">{{ art.art_detail.substr(0, 400) }}</div>
-            <p class="art-oth">{{ art.art_create_time}}</p>
+            <p class="art-oth">{{ art.art_create_time }}</p>
         </li>
     </ul>
 </template>

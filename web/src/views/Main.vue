@@ -41,7 +41,7 @@
                 colors2: ['rgba(243, 156, 107, 0.48)', 'rgba(160, 86, 59, 0.48)'],
                 xOffset2: 2, 
                 speed2: 0.02, 
-                headerList: [['主页', 'blogList'], ['添加新随笔', 'edit'], ['标签', 'tag'], ['关于', 'about']],
+                headerList: [['主页', 'blogList'], ['添加新随笔', 'edit'], ['文章管理', 'artMan'], ['标签', 'tag'], ['关于', 'about']],
 
             }
         },
@@ -60,11 +60,11 @@
            async goTarget (params) {
                 if (params === 'blogList' || params === 'about') {
                     this.$router.push({name: params})
-                }else if (localStorage.getItem('token') === undefined && (params === 'edit' || params === 'tag')) {
+                }else if (localStorage.getItem('token') === undefined && (params === 'edit' || params === 'tag' || params === 'artMan')) {
                     // let response = await accessControl(localStorage.getItem('token'));
                     this.$router.push({name: 'login'})
                 } else {
-                    let response = await accessControl(localStorage.getItem('token')); 
+                    let response = await accessControl(localStorage.getItem('token'));
                 }
             },
             drawSin () {
