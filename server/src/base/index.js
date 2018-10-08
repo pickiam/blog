@@ -1,14 +1,15 @@
 export default class base {
-    async transfer (field, params) {
+    transfer (field, params) {
         if (Object.prototype.toString.call(params) !== "[object Array]") {
             throw new Error('参数一定数组');
         }
-        const transferObj = {};
+        let transferObj = {};
         for (let index of params) {
-            if (field[index[0]]) {
-                transObj[index[1]] = field[index[0]]
+            if (field.hasOwnProperty(index[0])) {
+                transferObj[index[1]] = field[index[0]]
             }
         }
+        console.log(transferObj)
         return transferObj;
     }
 }

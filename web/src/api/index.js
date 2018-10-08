@@ -25,8 +25,7 @@ export const artList = params => fetch({
 export const getTagsList = (params) => fetch({
     url: env.baseUrl + '/tags/getTagsList',
     method: 'GET',
-    data: params,
-    headers: { 'Authorization': 'Bearer ' + '1234124' }
+    data: params
 });
 
 export const addTag = (AUTH_TOKEN, params) => fetch({
@@ -69,5 +68,5 @@ export const updateArticle = (AUTH_TOKEN, params) => fetch({
     url: env.baseUrl + '/article/updateArticle/' + params.id,
     method: 'PUT',
     data: params,
-    headers: { 'Authorization': 'Bearer' + AUTH_TOKEN}
+    headers: { 'Authorization': 'Bearer ' + AUTH_TOKEN}
 })

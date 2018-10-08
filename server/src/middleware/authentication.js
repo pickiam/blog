@@ -1,6 +1,6 @@
-// /server/middlreware/tokenError.js
-const jwt = require('jsonwebtoken');
-const config = require('../config/index.js');
+
+import jwt from 'jsonwebtoken'
+import config from '../config/index.js'
 const util = require('util');
 const verify = util.promisify(jwt.verify);
 
@@ -16,6 +16,7 @@ module.exports = function () {
       if (token) {
         try {
           // 解密payload，获取用户名和ID
+          console.log(config.tokenSecret)
           let payload = await verify(token.split(' ')[1], config.tokenSecret);
           ctx.user = {
             name: payload.name,

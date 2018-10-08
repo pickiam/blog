@@ -1,6 +1,9 @@
 <template>
     <div class="container">
         <div class="leftSiderBar">
+            <transition enter-active-class="animated bounceInLeft">
+                <div class="site" v-show="toggle">他山之石，可以攻玉</div>
+            </transition>
             <div class="canvas">
                 <canvas id="Canvas"></canvas>
             </div>
@@ -23,6 +26,7 @@
         name: 'Main',
         data () {
             return {
+                toggle: false,
                 canvas: '',
                 ctx: '',
                 points: [],
@@ -49,6 +53,7 @@
             // if (localStorage.getItem('token') && this.$store.state.perInfo === '') {
             //     this.$store.commit('setPerInfo',localStorage.getItem('token'))
             // }
+            this.toggle = true;
             this.canvas = document.getElementById('Canvas');
             this.ctx = this.canvas.getContext('2d');
             this.canvas.width = this.width;
@@ -60,11 +65,23 @@
            async goTarget (params) {
                 if (params === 'blogList' || params === 'about') {
                     this.$router.push({name: params})
-                }else if (localStorage.getItem('token') === undefined && (params === 'edit' || params === 'tag' || params === 'artMan')) {
+                }else if (localStorage.getItem('token') === null && (params === 'edit' || params === 'tag' || params === 'artMan')) {
                     // let response = await accessControl(localStorage.getItem('token'));
                     this.$router.push({name: 'login'})
                 } else {
-                    let response = await accessControl(localStorage.getItem('token'));
+                    try {
+                        let response = await accessControl(localStorage.getItem('token'));
+                        if (response.data.success) {
+                            this.$router.push({name: params});
+                        } else {
+                            this.$router.push({name: 'login'}); 
+                        }
+                    } catch (error) {
+                        console.log(error)
+                        this.$router.push({name: 'login'}); 
+                    }
+                    // console.log(response)
+        
                 }
             },
             drawSin () {
@@ -150,6 +167,7 @@
             text-overflow: ellipsis;
             overflow: hidden;
             word-break: break-all;
+            position: relative;
             .canvas {
                 width: 100%;
                 height: 200px;
@@ -160,6 +178,18 @@
                     height: 200px;
 
                 }
+            }
+            .site {
+                position: absolute;
+                color: #f35626;
+                line-height: 30px;
+                text-align: center;
+                width: 100%;
+                font-size: 20px;
+                top: 70px;
+                background-image: -webkit-linear-gradient(92deg,#f35626,#feab3a);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
             }
             .target {
                 list-style: none;

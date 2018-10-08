@@ -43,10 +43,22 @@ export default async (options) => {
     // } catch (error) {
     //     throw new Error(error);
     // }
-    try {
-        let response = await axios(options);
-        return response;
-    } catch (error) {
-        console.log(error)
+    // try {
+    //     let response = await axios(options);
+    //     return response;
+    // } catch (error) {
+    //     console.log(error)
+    // }
+    if (options.data && options.method.toLowerCase() === 'get' || options.method.toLowerCase() === 'delete') {
+        let dataStr = '';
+        Object.keys(options.data).forEach(k => {
+            dataStr += k + '=' + options.data[k] + '&';
+        })
+        if (dataStr !== '') {
+            options.url = (options.url.indexOf('?') >= 0 ? options.url + '&' : options.url + '?') + dataStr.substr(0, dataStr.lastIndexOf('&'));
+        }
     }
+    // console.log(options)
+    let response = await axios(options);
+    return response;
 };

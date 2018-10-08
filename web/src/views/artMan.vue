@@ -1,18 +1,22 @@
 <template>
     <div>
-        <p class="title">标签管理</p>
-        <el-table :data="tableData" border medium>
+        <p class="title">文章管理</p>
+        <el-table :data="artList" border medium>
             <el-table-column fixed prop="art_id" label="id" align="center"></el-table-column>
             <el-table-column  prop="art_title" label="标题" align="center"></el-table-column>
             <el-table-column  prop="art_create_time" label="创建时间" align="center"></el-table-column>
             <el-table-column  prop="art_update_time" label="更新时间" align="center"></el-table-column>
             <el-table-column fixed="right" label="操作" align="center">
                 <template slot-scope="scope">
-                    <el-button @click="handleSticky(scope.$index, scope.row)">{{ scope.row.art_sticky === 1 ? 取消置顶 : 置顶 }}</el-button>
-                    <el-button @click="handleStatus(scope.$index, scope.row)">{{ scope.row.art_status === 1 ? 下架 : 上架 }}</el-button>
+                    <el-button @click="handleSticky(scope.$index, scope.row)">{{ scope.row.art_sticky === 1 ? '取消置顶' : '置顶' }}</el-button>
+                    <el-button @click="handleStatus(scope.$index, scope.row)">{{ scope.row.art_status === 1 ? '下架' : '上架' }}</el-button>
                 </template>
             </el-table-column>
         </el-table>
+        <el-pagination
+            layout="prev, pager, next"
+            :total="pageTotal">
+        </el-pagination>
     </div>
 </template>
 <script>
@@ -24,7 +28,19 @@ export default {
     computed: {
         artList () {
             return this.$store.state.artList;
+        },
+        pageTotal () {
+            return this.$store.state.pageTotal
         }
+    },
+    data () {
+        return {
+            pageSize: 6,
+            pageNum: 1
+        }
+    },
+    mounted() {
+        console.log(this.pageTotal)
     },
     methods: {
         async handleSticky(index, row) {
@@ -42,3 +58,10 @@ export default {
     }
 }
 </script>
+
+<style lang="less" scoped>
+    .title {
+        font-size: 20px;
+        color: #808080;
+    }
+</style>

@@ -16,7 +16,8 @@ export default function createStore() {
           perInfo: '',
           tagsList: [],
           artList: [],
-          artDetail: ''
+          artDetail: '',
+          pageTotal: 0
       },
       actions: {
           fetchBar({commit}) {
@@ -33,15 +34,15 @@ export default function createStore() {
                   console.log('123' + err);  
               })
           },
-          getArtList({commit}) {
-              return getArtList().then(res => {
+          getArtList({commit}, payload) {
+              return getArtList(payload).then(res => {
                   commit('getArtList', res.data.data)
+                  commit('setPageTotal', res.data.count.count)
               }, err => {
                   console.log(err);
               })
           },
           getArtDetails({commit}, payload) {
-              console.log(payload);
               return getArtDetails(payload).then(res => {
                   commit('getArtDetails', res.data.data)
               }, err => {
@@ -61,6 +62,9 @@ export default function createStore() {
           },
           getArtList(state, data) {
               Vue.set(state, 'artList', data)
+          },
+          setPageTotal(state, data) {
+              Vue.set(state, 'pageTotal', data)
           },
           getArtDetails(state, data) {
               Vue.set(state, 'artDetail', data)

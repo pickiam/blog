@@ -1,6 +1,7 @@
 import base from '../../base/index.js';
 import ArticleModel from '../../models/article/index.js';
 import formidable from 'formidable';
+import sequelize from 'sequelize'
 import miment from 'miment';
 import marked from 'marked';
 class article extends base {
@@ -11,19 +12,37 @@ class article extends base {
     }
 
     async articleList (ctx, next) {
-        let { page = 1, pageSize = 6, status = 1, tag = '' } = ctx.query;
+        let { page = 1, pageSize = 6, tag = '' } = ctx.query;
         try {
-            const artList = await ArticleModel.findAll({
-                where: {
-                    art_status: status
-                },
-                offset: (page - 1) * pageSize,
-                limit: pageSize
-            });
+            let artList, count;
+            if (ctx.query.status) {
+                artList = await ArticleModel.findAll({
+                    where: {
+                        art_status: ctx.query.status
+                    },
+                    offset: (page - 1) * pageSize,
+                    limit: pageSize
+                });
+                count = await ArticleModel.findAll({
+                    attributes: [[sequelize.fn('COUNT', sequelize.col('*')), 'count']],
+                    where: {
+                        art_status: ctx.query.status
+                    }
+                })
+            } else {
+                artList = await ArticleModel.findAll({
+                    offset: (page - 1) * pageSize,
+                    limit: pageSize
+                });
+                count = await ArticleModel.findAll({
+                    attributes: [[sequelize.fn('COUNT', sequelize.col('*')), 'count']]
+                })
+            }
             ctx.body = {
                 code: 200,
                 success: true,
-                data: artList
+                data: artList,
+                count: count[0]
             }
         } catch (error) {
             console.log(error);
@@ -52,12 +71,13 @@ class article extends base {
                     });
                     return;
                 }
+                console.log(miment().format());
                 try {
                     const response = await ArticleModel.create({
                         art_title: title,
                         art_status: status,
                         art_sticky: sticky,
-                        art_htmlContent: htmlContent,
+                        art_htmlDetail: htmlContent,
                         art_detail: content,
                         art_create_time: miment().format(),
                         art_update_time: miment().format(),
@@ -94,19 +114,25 @@ class article extends base {
                     })
                 }
                 const { title, content, tags, status, sticky } = fields;
-
+                console.log(fields)
                 try {
                     const params = [['title', 'art_title'], ['content', 'art_detail'], ['tags', 'art_tag'], ['status', 'art_status'], ['sticky','art_sticky']]
-                    const transferResult = this.transfer(fields, params);
+                    let transferResult = this.transfer(fields, params);
+                    let updateKey = null;
                     if (transferResult.art_detail) {
-                        const updateKey = Object.assign({}, {art_htmlContent: marked(transferResult.art_detail)}, {art_update_time: miment.format()})
+                        updateKey = Object.assign({}, transferResult, {art_htmlDetail: marked(transferResult.art_detail)}, {art_update_time: miment.format()})
                     }else {
-                        const updateKey = Object.assign({}, {art_update_time: miment.format()}) 
+                        updateKey = Object.assign({}, transferResult, {art_update_time: miment().format()}) 
                     }
                     let response = await ArticleModel.update( updateKey, {
                         where: {
                             art_id: id
                         }
+                    })
+                    resolve({
+                        code: 200,
+                        success: true,
+                        message: '更新成功'
                     })
                 } catch (error) {
                     console.log(error);

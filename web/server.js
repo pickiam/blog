@@ -54,7 +54,7 @@ server.use('/service-worker.js', serve('./dist/service-worker.js'))
 
 server.get('*', (req, res) => {
   const context = {
-    title: '长安出行',
+    title: 'dojo博客',
     url: req.url
   }
   renderer.renderToString(context, (err, html) => {

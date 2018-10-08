@@ -83,8 +83,15 @@
 
             this.socket.on('getDraftPost', (data) => {
                 if (data) {
-                    this.articleInfo = data;
-                    this.editor.value(`${data.content}`)
+                    this.articleInfo.title = data.selectResult.art_title;
+                    this.articleInfo.content  = data.selectResult.art_detail;
+                    this.articleInfo.tags = data.selectResult.art_tag.split(',');
+                    this.articleInfo.tags = this.articleInfo.tags.reduce((index, currentValue, currentIndex) => {
+                        index[currentIndex] = +currentValue
+                        return index;
+                    }, [])
+                    console.log(this.articleInfo.tags)
+                    this.editor.value(`${data.selectResult.art_detail}`);
                 }
             })
             this.timer = setInterval(() => {

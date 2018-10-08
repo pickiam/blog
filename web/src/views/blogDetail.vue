@@ -1,7 +1,7 @@
 <template>
     <div class="artDetailBg">
         <p class="artDetailTitle">{{artDetail.art_title}}</p>
-        <div class="artDetailContent">{{artDetail.art_detail}}</div>
+        <div class="artDetailContent" v-html="artDetail.art_htmlDetail"></div>
     </div>
 </template>
 <script>

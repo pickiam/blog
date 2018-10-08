@@ -14,11 +14,11 @@ import router from './src/routes/index.js'
 
 app.use(cors());
 app.use(koaStatic(path.join(__dirname, './src/upload')))
+app.use(authorization())
 
 app.use(kwt({ secret:config.tokenSecret }).unless({
-    path:[/^\/admin\/login/, /^\/admin\/uploadImg/, /^\/article\/artList/, /^\/article\/artDetail/]
+    path:[/^\/admin\/login/, /^\/admin\/uploadImg/, /^\/article\/artList/, /^\/article\/artDetail/, /^\/tags\/getTagsList/]
 }))
-app.use(authorization())
 
 router(app);
 const server = http.createServer(app.callback()).listen(6060);
