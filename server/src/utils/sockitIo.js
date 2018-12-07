@@ -7,7 +7,7 @@ const initSocket = function (server) {
     let socketHandle = socketIo(server, {
         serveClient: true
     });
-
+    
     let draftRedis = new redis(config.redis);
     socketHandle.on('connection', function (socket) {
         console.log('socket connected');

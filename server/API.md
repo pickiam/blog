@@ -3081,7 +3081,8 @@ GET
 https://elm.cangdu.org/statis/admin/:date/count
 ```
 
-#### 示例：
+#### 
+示例：
 [https://elm.cangdu.org/statis/admin/2017-05-30/count](https://elm.cangdu.org/statis/admin/2017-05-30/count)
 
 #### 请求方式：
