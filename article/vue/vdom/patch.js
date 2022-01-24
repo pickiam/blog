@@ -41,7 +41,7 @@ export function patch(oldVnode, vnode) {
 // 
 function createComponent(vnode) {
   let i = vnode.data
-  if ((i = i.hook) && (i = init)) {
+  if ((i = i.hook) && (i = i.init)) {
     i(vnode)
   }
   if (vnode.componentInstance) {

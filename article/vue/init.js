@@ -40,6 +40,6 @@ export function initMixin(Vue) {
         options.render = render
       }
     }
+    return mountComponent(vm, el)
   }
-  return mountComponent(vm, el)
 }
