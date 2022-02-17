@@ -36,7 +36,8 @@ async function async2() {
   console.log(5)
 }
 async2()
-console.log(6) // 1 4 2 6 3 5
+console.log(6) 
+// 1 4 2 6 3 5
 
 
 // 深层比较两个对象
@@ -75,6 +76,16 @@ function search(arrTarget, target) {
     }
   }
   return result
+}
+function search(arrTarget, target) {
+  let result = []
+  let map = new Map()
+  for (let i = 0; i < arrTarget.length; i++) {
+    if (map.has(target - arrTarget[i])) {
+      result.push(...[i, map.get(target - arrTarget[i])])
+    }
+    map.set(arrTarget[i], i)
+  }
 }
 function debounce(fn, delay) {
   let timer

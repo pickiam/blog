@@ -56,17 +56,19 @@ sub.prototype.contructor = sub
 
 function mySetInterval(fn, time) {
     let clear = false
+    let timer = null
     let loop = () => {
         if (clear) {
             clear = false
+            timer = null
            return
         }
         fn()
-        setTimeout(() => {
+        timer = setTimeout(() => {
             loop()
         }, time)
     }
-    setTimeout(loop, fn)
+    timer = setTimeout(loop, time)
     return () => {
         clear = true
     }
